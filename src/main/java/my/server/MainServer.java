@@ -1,7 +1,5 @@
 package my.server;
 
-import my.server.ChatServer;
-
 public class MainServer {
     public static void main(String[] args) {
         ChatServer chatServer = new ChatServer();
