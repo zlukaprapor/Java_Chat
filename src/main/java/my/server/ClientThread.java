@@ -23,20 +23,27 @@ public class ClientThread implements Runnable {
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
             System.out.println("Client №" + numberClient + " connected.");
-            new PrintWriter(clientSocket.getOutputStream(), true).println("Client №" + numberClient + ".");
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+            out.println("Client №" + numberClient + ".");
             String clientMessage = null;
 
             while (true) {
                 clientMessage = in.readLine();
-                if (!"exit".equals(clientMessage)) {
-                    System.out.println("Client №" + numberClient + ": " + clientMessage);
-                    chatServer.sendMessageForAllClient(numberClient, clientMessage);
-                } else {
+                if (clientMessage == null || "exit".equals(clientMessage)) {
                     break;
                 }
+                System.out.println("Client №" + numberClient + ": " + clientMessage);
+                chatServer.sendMessageForAllClient(numberClient, clientMessage);
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println("Error in client thread: " + e.getMessage());
+        } finally {
+            try {
+                clientSocket.close();
+            } catch (IOException e) {
+                System.err.println("Error closing client socket: " + e.getMessage());
+            }
+            System.out.println("Client №" + numberClient + " disconnected.");
         }
     }
 }

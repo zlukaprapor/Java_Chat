@@ -9,7 +9,7 @@ public class ConnectInputMessage implements Runnable {
 
     public ConnectInputMessage() {
         try {
-            serverConnect = new Socket("localhost", 8887);
+            serverConnect = new Socket("localhost", 8888);
             inputStreamServer = serverConnect.getInputStream();
         } catch (IOException e) {
             throw new RuntimeException(e);
