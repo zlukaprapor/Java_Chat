@@ -19,7 +19,7 @@ public class ChatServer implements Runnable {
     @Override
     public void run() {
         try {
-            server = new ServerSocket(8888);
+            server = new ServerSocket(8887);
             System.out.println("Server started. Waiting for clients.");
             int numberClient = 1;
 
